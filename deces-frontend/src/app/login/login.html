@@ -1,0 +1,57 @@
+<div class="login-container">
+  <div class="header">
+    <div class="logo-section">
+      <div class="chu-icon">🏥</div>
+      <span class="chu-name">CHU Hassan II de Fès</span>
+    </div>
+    <div class="verset">
+      <span class="arabic-text">﴿ كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ﴾</span>
+    </div>
+  </div>
+
+  <div class="login-card">
+    <div class="card-header">
+      <div class="icon">⚕️</div>
+      <h2>Système de Gestion des Décès</h2>
+      <p>Connectez-vous à votre espace</p>
+    </div>
+
+    <form (ngSubmit)="onLogin()" class="login-form">
+      <div class="input-group">
+        <label>👤 Identifiant</label>
+        <input type="text" [(ngModel)]="username" name="username" placeholder="Votre identifiant" required>
+      </div>
+
+      <div class="input-group">
+        <label>🔒 Mot de passe</label>
+        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password" placeholder="Mot de passe" required>
+        <span class="toggle-password" (click)="togglePassword()">
+          {{ showPassword ? '🙈' : '👁️' }}
+        </span>
+      </div>
+
+      <div class="input-group">
+        <label>🏥 Votre service</label>
+        <select [(ngModel)]="selectedRole" name="role" required>
+          <option value="" disabled>Sélectionnez votre rôle</option>
+          <option value="MEDECIN">👨‍⚕️ Médecin</option>
+          <option value="INFIRMIER">🩺 Infirmier / Infirmière</option>
+          <option value="ADMIN">📋 Agent administratif</option>
+          <option value="TRANSPORT">🚑 Agent transport / Morgue</option>
+        </select>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="!username || !password || !selectedRole || isLoading" class="login-btn">
+        {{ isLoading ? 'Connexion...' : 'Se connecter →' }}
+      </button>
+    </form>
+
+    <div class="footer-note">
+      <p>CHU Hassan II - Tous droits réservés © 2026</p>
+    </div>
+  </div>
+</div>
