@@ -1,19 +1,32 @@
-server:
-  port: 8080
-
 spring:
   datasource:
-    url: jdbc:h2:mem:gestion_deces_db
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    url: jdbc:mysql://localhost:3306/gestion_deces_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+  sql:
+    init:
+      mode: never
+
+  mail:
+    host: ----------------
+    port: -----------
+    username: ---------------
+    password: -----------
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  server:
+    address: 0.0.0.0
+    port: 8080
