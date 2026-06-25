@@ -5,9 +5,6 @@ public class UpdateUserRequest {
     private String nom;
     private String email;
 
-    /**
-     * Optionnel : si null ou vide, l'ancien mot de passe est conservé.
-     */
     private String password;
 
     private Role role;

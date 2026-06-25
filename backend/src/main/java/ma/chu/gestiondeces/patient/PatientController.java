@@ -17,29 +17,12 @@ public class PatientController {
         this.patientRepository = patientRepository;
     }
 
-    /**
-     * Récupérer un patient par IPP exact.
-     * GET /api/patients/{ipp}
-     */
     @GetMapping("/{ipp}")
     public Patient getPatientByIpp(@PathVariable String ipp) {
         return patientRepository.findByIpp(ipp)
                 .orElseThrow(() -> new RuntimeException("Patient introuvable"));
     }
 
-    /**
-     * Recherche avancée multi-critères.
-     * GET /api/patients/search?nom=...&prenom=...&ipp=...&service=...
-     *
-     * Tous les paramètres sont optionnels.
-     * La recherche est insensible à la casse et fonctionne en "contains".
-     * - nom    : cherché dans patient.nom ET patient.prenom (OR)
-     * - prenom : cherché dans patient.prenom uniquement
-     * - ipp    : cherché dans patient.ipp
-     * - service: cherché dans patient.serviceOrigine
-     * Les critères fournis sont combinés en AND.
-     * Si aucun critère n'est fourni, tous les patients sont retournés.
-     */
     @GetMapping("/search")
     public List<Patient> searchPatients(
             @RequestParam(required = false) String nom,
@@ -58,10 +41,7 @@ public class PatientController {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Vérifie si un patient correspond aux critères de recherche.
-     * Tous les critères non-renseignés (null ou vide) sont ignorés.
-     */
+
     private boolean matchesPatient(
             Patient p,
             String nom,
@@ -69,7 +49,7 @@ public class PatientController {
             String ipp,
             String service
     ) {
-        // Filtre nom : cherche dans nom ET prenom (OR)
+
         if (hasValue(nom)) {
             String nomLower = nom.toLowerCase();
             boolean nomMatch =
@@ -78,17 +58,16 @@ public class PatientController {
             if (!nomMatch) return false;
         }
 
-        // Filtre prenom : cherche uniquement dans prenom
         if (hasValue(prenom)) {
             if (!contains(p.getPrenom(), prenom.toLowerCase())) return false;
         }
 
-        // Filtre IPP
+
         if (hasValue(ipp)) {
             if (!contains(p.getIpp(), ipp.toLowerCase())) return false;
         }
 
-        // Filtre service
+
         if (hasValue(service)) {
             if (!contains(p.getServiceOrigine(), service.toLowerCase())) return false;
         }

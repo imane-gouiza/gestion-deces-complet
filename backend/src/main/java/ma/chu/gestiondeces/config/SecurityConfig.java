@@ -32,7 +32,6 @@ public class SecurityConfig {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 🔐 Authentication provider (email + password)
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -41,18 +40,17 @@ public class SecurityConfig {
         return provider;
     }
 
-    // 🔒 Security filter chain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                // ❌ disable CSRF (JWT)
+
                 .csrf(csrf -> csrf.disable())
 
-                // 🌐 enable CORS
+
                 .cors(cors -> {})
 
-                // 🔐 stateless session (JWT)
+
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
@@ -61,14 +59,14 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // ✅ PUBLIC (login/register)
+
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // 🔐 everything else requires login
+
                         .anyRequest().authenticated()
                 )
 
-                // 🔑 JWT filter
+
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class

@@ -61,25 +61,7 @@ public class DossierController {
         return dossierService.confirmerArriveeMorgue(body.get("codeCadavre"));
     }
 
-    /**
-     * Recherche avancée multi-critères sur les dossiers décès.
-     * GET /api/dossiers/search
-     *
-     * Paramètres (tous optionnels) :
-     *   q           — Terme global cherché dans numeroOrdre, codeCadavre,
-     *                 patient.ipp, patient.nom, patient.prenom, patient.serviceOrigine
-     *   numeroOrdre — Filtrage partiel sur le numéro d'ordre
-     *   ipp         — Filtrage partiel sur l'IPP du patient
-     *   nom         — Filtrage partiel sur le nom OU prénom du patient
-     *   codeCadavre — Filtrage partiel sur le code cadavre
-     *   service     — Filtrage partiel sur le service d'origine du patient
-     *   statut      — Filtrage exact sur le statut (ex : EN_ATTENTE_VERIFICATION)
-     *
-     * Les critères individuels sont combinés en AND.
-     * Le terme global `q` est évalué en OR sur tous les champs textuels.
-     * Si aucun critère n'est fourni, tous les dossiers sont retournés triés
-     * par date de création décroissante.
-     */
+
     @GetMapping("/search")
     public List<DossierDeces> searchDossiers(
             @RequestParam(required = false) String q,

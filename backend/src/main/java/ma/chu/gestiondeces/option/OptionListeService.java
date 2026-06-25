@@ -13,12 +13,11 @@ public class OptionListeService {
         this.repository = repository;
     }
 
-    /** Toutes les valeurs d'une catégorie (ex. TYPE_ANOMALIE). */
+
     public List<OptionListe> getByCategorie(String categorie) {
         return repository.findByCategorieOrderByValeurAsc(categorie);
     }
 
-    /** Ajouter une valeur à une catégorie. */
     public OptionListe ajouter(String categorie, String valeur) {
 
         if (categorie == null || categorie.trim().isEmpty()) {
@@ -38,7 +37,7 @@ public class OptionListeService {
         return repository.save(new OptionListe(cat, val));
     }
 
-    /** Supprimer une valeur. */
+
     public void supprimer(Long id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Valeur introuvable");

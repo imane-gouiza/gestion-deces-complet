@@ -15,7 +15,7 @@ public class Notification {
 
     private String titre;
 
-    // ✅ CORRECTION : TEXT بدل VARCHAR باش يقبل رسائل طويلة
+
     @Column(columnDefinition = "TEXT")
     private String message;
 

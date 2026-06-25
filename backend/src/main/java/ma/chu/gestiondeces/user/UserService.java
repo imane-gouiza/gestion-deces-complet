@@ -14,7 +14,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // ── Lecture ─────────────────────────────────────────────────────────────
+
 
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
@@ -36,7 +36,7 @@ public class UserService {
         return UserResponse.fromEntity(user);
     }
 
-    // ── Création ────────────────────────────────────────────────────────────
+
 
     public UserResponse createUser(CreateUserRequest request) {
 
@@ -69,7 +69,7 @@ public class UserService {
         return UserResponse.fromEntity(userRepository.save(user));
     }
 
-    // ── Modification ────────────────────────────────────────────────────────
+
 
     public UserResponse updateUser(Long id, UpdateUserRequest request) {
 
@@ -82,20 +82,19 @@ public class UserService {
 
         if (request.getEmail() != null && !request.getEmail().trim().isEmpty()) {
             String newEmail = request.getEmail().trim().toLowerCase();
-            // Vérifier l'unicité uniquement si l'email change
+
             if (!newEmail.equals(user.getEmail()) && userRepository.existsByEmail(newEmail)) {
                 throw new RuntimeException("Cet email est déjà utilisé");
             }
             user.setEmail(newEmail);
         }
 
-        // Mot de passe optionnel : on ne le change que s'il est fourni
         if (request.getPassword() != null && !request.getPassword().trim().isEmpty()) {
             user.setPassword(request.getPassword());
         }
 
         if (request.getRole() != null) {
-            // Empêcher de retirer le rôle ADMINISTRATION au dernier admin
+
             if (user.getRole() == Role.ADMINISTRATION
                     && request.getRole() != Role.ADMINISTRATION
                     && userRepository.countByRole(Role.ADMINISTRATION) <= 1) {
@@ -107,13 +106,12 @@ public class UserService {
         return UserResponse.fromEntity(userRepository.save(user));
     }
 
-    // ── Suppression ─────────────────────────────────────────────────────────
 
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
 
-        // Protection : ne jamais supprimer le dernier administrateur
+
         if (user.getRole() == Role.ADMINISTRATION
                 && userRepository.countByRole(Role.ADMINISTRATION) <= 1) {
             throw new RuntimeException("Impossible de supprimer le dernier administrateur");

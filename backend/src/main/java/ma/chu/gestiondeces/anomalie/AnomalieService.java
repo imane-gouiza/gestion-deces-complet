@@ -51,7 +51,7 @@ public class AnomalieService {
 
         Anomalie anomalieSaved = anomalieRepository.save(anomalie);
 
-        // ✅ CORRECTION : message détaillé avec qui a signalé + référence
+
         String roleSignalant = request.getSignaleeParRole() == Role.SURVEILLANT_GENERAL
                 ? "le Surveillant Général"
                 : "l'Ambulancier";
@@ -127,7 +127,6 @@ public class AnomalieService {
         dossier.setStatut(StatutDossier.EN_ATTENTE_VERIFICATION);
         DossierDeces dossierSaved = dossierRepository.save(dossier);
 
-        // ✅ CORRECTION : message détaillé pour le Surveillant Général
         String messageCorrection =
                 "Bonjour Surveillant Général,\n\n" +
                         "L'anomalie du dossier " + dossierSaved.getReferenceDossier() + " a été corrigée par le BAF.\n\n" +

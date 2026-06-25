@@ -56,8 +56,7 @@ public class DossierService {
             throw new RuntimeException("Seul le BAF peut créer un dossier décès");
         }
 
-        // CORRECTION : utilise countDossiersByPatientIpp() > 0 à la place de
-        // existsDossierByIpp() qui contenait SELECT COUNT(d) > 0 (JPQL invalide).
+
         if (dossierRepository.countDossiersByPatientIpp(request.getIpp()) > 0) {
             throw new RuntimeException("Ce patient possède déjà un dossier décès actif.");
         }
@@ -117,10 +116,7 @@ public class DossierService {
         return saved;
     }
 
-    /**
-     * ÉTAPE 3
-     * Confirmation prise en charge par Ambulancier.
-     */
+
     public DossierDeces confirmerPriseEnCharge(String codeCadavre) {
 
         DossierDeces dossier = dossierRepository.findByCodeCadavre(codeCadavre)
@@ -147,10 +143,7 @@ public class DossierService {
         return saved;
     }
 
-    /**
-     * ÉTAPE 4
-     * Confirmation arrivée morgue.
-     */
+
     public DossierDeces confirmerArriveeMorgue(String codeCadavre) {
 
         DossierDeces dossier = dossierRepository.findByCodeCadavre(codeCadavre)
@@ -177,9 +170,7 @@ public class DossierService {
         return saved;
     }
 
-    /**
-     * Recherche avancée multi-critères sur les dossiers décès.
-     */
+
     public List<DossierDeces> searchDossiers(
             String q,
             String numeroOrdre,

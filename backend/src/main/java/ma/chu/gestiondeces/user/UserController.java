@@ -17,13 +17,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    /** Tous les utilisateurs. */
+
     @GetMapping
     public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    /** Utilisateurs filtrés par rôle (pour la liste déroulante de l'admin). */
+
     @GetMapping("/role/{role}")
     public List<UserResponse> getUsersByRole(@PathVariable Role role) {
         return userService.getUsersByRole(role);
@@ -34,7 +34,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    /** Création d'un nouvel utilisateur (n'importe quel rôle, y compris ADMINISTRATION). */
+
     @PostMapping
     public UserResponse createUser(@RequestBody CreateUserRequest request) {
         return userService.createUser(request);
